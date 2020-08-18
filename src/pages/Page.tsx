@@ -30,5 +30,4 @@ const Page: React.FC = () => {
     </IonPage>
   );
 };
-
 export default Page;

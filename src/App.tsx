@@ -1,44 +1,27 @@
-import Menu from './components/Menu';
-import Page from './pages/Page';
-import React from 'react';
-import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import PersistentDrawerLeft from './components/swap';
+//import enquiries from './components/enquiries';
+import {  Router } from 'react-router';
+import { createBrowserHistory } from 'history';
+import Routes from './routes/Routes';
+import ReactGA from 'react-ga';
 
-/* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
+const history = createBrowserHistory();
+history.listen((location)=>{
+ReactGA.set({page:location.pathname})
+ReactGA.pageview(location.pathname);
+})
 
-/* Basic CSS for apps built with Ionic */
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
-
-/* Theme variables */
-import './theme/variables.css';
-
-const App: React.FC = () => {
-
+function App() {
   return (
-    <IonApp>
-      <IonReactRouter>
-        <IonSplitPane contentId="main">
-          <Menu />
-          <IonRouterOutlet id="main">
-            <Route path="/page/:name" component={Page} exact />
-            <Redirect from="/" to="/page/Inbox" exact />
-          </IonRouterOutlet>
-        </IonSplitPane>
-      </IonReactRouter>
-    </IonApp>
-  );
-};
+    <div>
+     <PersistentDrawerLeft /> 
+      <Router history={history}>
+        <Routes />
+      </Router>
+      {/* <MenuBar items={items} depthStep={depthStep}depth={depth}expanded={expand}/> */}
 
+    </div>
+  )
+}
 export default App;
