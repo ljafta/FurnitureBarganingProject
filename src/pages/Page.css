@@ -1,0 +1,13 @@
+.container input {
+    height: 16px;
+    padding: 0px 14px;
+  }
+  .textsize input {
+    height: 16px;
+    padding: 0px 14px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+}
+

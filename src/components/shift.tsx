@@ -1,18 +1,3 @@
-import {
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonText,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonNote,
-  IonToolbar,
-  IonButton
-} from '@ionic/react';
-
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -32,11 +17,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import MenuBar from './MenuBar';
-import { AppMenuContext } from '../context/appMenuContext';
-import { HeaderNameContext } from '../context/hearder';
 
-const drawerWidth = 270;
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,60 +80,16 @@ const useStyles = makeStyles((theme) => ({
 export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
-  const {hearder}= React.useContext(HeaderNameContext)
-  // const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-  const items = [
-    {
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-      label: 'Masters Module',
-      header: true,
-      items: [
-        { label: 'Employer', url: '/employerbrowser' },
-         { label: 'Employee', url: '/employee-browse' },
-        //  { label: 'Doctor', url: '/employer-enquire' },
-        { label: 'Employer-Employee', url: '/employer-employee' },
-        { label: 'Doctor-Employee', url: '/doctorbrowse' },
-      ],
-    },
-    {
-      label: 'Financials',
-      header: true,
-      items: [
-        { label: 'Financials-Batch-Entry', url: '/financials-batch-entry' },
-        { label: 'Unbalanced-Batch-Rev', url: '/load' },
-        { label: 'Utilisation-Details', url: '/load' },
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
-      ],
-    },
-
-    {
-      label: 'Tables',
-      header: true,
-      items: [
-        { label: 'Area Code', url: '/load' },
-        { label: 'Union Code', url: '/load' },
-        { label: 'Unitisation Details', url: '/utilisationdetails' },
-      ]
-    },
-    {
-
-      label: 'Locations',
-      header: true,
-      items: [
-        { label: 'locations', url: '/load' },
-
-      ],
-    },
-  ]
-
-  const depthStep = 0;
-  const depth = 0;
-  const expand = 0;
-
-  const { open, handleAppMenuOpen } = React.useContext(AppMenuContext)
-
-  console.log("open ", open)
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -165,14 +103,14 @@ export default function PersistentDrawerLeft() {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={() => handleAppMenuOpen(true)}
+            onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            {hearder}
+            Persistent drawer
           </Typography>
         </Toolbar>
       </AppBar>
@@ -186,27 +124,30 @@ export default function PersistentDrawerLeft() {
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={() => handleAppMenuOpen(false)}>
+          <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
-        <MenuBar items={items} depthStep={depthStep} depth={depth} expanded={expand} />
-        {/* <List>
+        <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
-        </List> */}
+        </List>
         <Divider />
-
+        <List>
+          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
       </Drawer>
-
-
-
-      {/* <main
+      <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
@@ -235,8 +176,7 @@ export default function PersistentDrawerLeft() {
           nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
           accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
-      </main> */}
-
+      </main>
     </div>
   );
 }

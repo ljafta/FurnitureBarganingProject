@@ -17,49 +17,85 @@ import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp
 
 import ListItemText from '@material-ui/core/ListItemText'
 import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography"
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Collapse from "@material-ui/core/Collapse";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from 'react-router-dom';
-import { Route } from 'react-router-dom'
 
 
-const useStyles = makeStyles((theme) => ({
-  nested: { paddingLeft: theme.spacing(4), height: "12px" }
+// const useStyles = makeStyles((theme) => ({
+//   nested: { paddingLeft: theme.spacing(4), height: "12px" }
 
-}))
+// }))
+
+const useStyles = makeStyles({
+  root: {
+    width: '100%',  
+  },
+  container: {
+    maxHeight: 440,
+
+  },
+  text:{
+    fontWeight: "bold",
+  },
+  cell:{
+    display: "flex",
+    flexDirection: "row"
+  },
+  sidebar:{
+    maxWidth: '240',
+    maxHeight: '100'
+    
+  },
+  sidebaritemcontent:{
+    whitespace: 'nowrap',
+    textoverflow: 'ellipsis',
+    overflow: 'hidden',
+    display: 'flex',   
+    width: '100'
+  },
+  label:{
+   fontWeight:'bold'    ,
+   
+  },
+  padding:{
+    marginLeft: '20px'
+    
+   },
+
+});
+
 
 interface Props {
   depthStep: number;
   depth: number;
   expanded: any;
   item: any;
-
 }
+
 //@ts-ignore
 function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }: Props) {
   const [collapsed, setCollapsed] = React.useState(true);
-  const { label, items, Icon, onClick: onClickProp } = item;
+  const { label, header, items, Icon, onClick: onClickProp } = item;
   const classes = useStyles();
-  const history = useHistory();
-  console.log({item});
-
-
 
   function toggleCollapse() {
-    setCollapsed(prevValue => !prevValue);
+    setCollapsed(prevValue => !prevValue);    
   }
-  const handleClick = React.useCallback(() => {
-    if (items) {
-      history.push(items.url);
-    }  
+      
+  // const handleClick = React.useCallback(() => {
+  //   if (items) {
+      
+  //     history.push(items.url);
+  //     console.log(items)
+  //   }   
 
-  }, [])
-
-
+  // }, [items.url])
+  
   function onClick(e: any) {
     if (Array.isArray(items)) {
       toggleCollapse();
@@ -82,24 +118,28 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }: Pro
         <ExpandMoreIcon className="sidebar-item-expand-arrow" />
       );
   }
-
   return (
+    
     <>
       <IonItem
-        className="sidebar-item"
+        // className="sidebar-item"
+        className={classes.sidebar}
         onClick={onClick}
         button
-
+        routerLink={item.url}
         {...rest}
       >
         <div
           style={{ paddingLeft: depth * depthStep }}
-          onClick={handleClick}
-
-          className="sidebar-item-content"
+          // className="sidebar-item-content"
+          className={classes.sidebaritemcontent}
         >
+        
           {Icon && <Icon className="sidebar-item-icon" fontSize="small" />}
-          <div className="sidebar-item-text">{label}</div>
+         
+          
+          <Typography className={header? classes.label: classes.padding}>{label}</Typography>
+         
         </div>
         {/* <IonList>
             <IonItem className={classes.nested}>
@@ -123,7 +163,7 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }: Pro
                       depth={depth + 1}
                       depthStep={depthStep}
                       item={subItem}
-                      expanded={expanded}
+                      expanded={expanded} 
                     />
                   )}
 
@@ -135,19 +175,20 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }: Pro
     </>
   );
 }
+
 interface MenuProps {
   depthStep: number;
   depth: number;
   expanded: any;
   items: any;
-
 }
-function MenuBar({ items, depthStep, depth, expanded }: MenuProps) {
+
+function MenuBar({ items, depthStep, depth, expanded }:MenuProps) {
   return (
     <div className="sidebar">
 
       <IonList >
-        {items.map((sidebarItem: any, index: number) => (
+        {items.map((sidebarItem: any, index:number) => (
           <React.Fragment key={`${sidebarItem.name}${index}`}>
             {sidebarItem === "divider" ? (
               <Divider style={{ margin: "6px 0" }} />
