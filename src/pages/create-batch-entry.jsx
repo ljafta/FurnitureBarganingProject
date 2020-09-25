@@ -5,11 +5,11 @@ import {
   IonSelect,
   IonSelectOption,
   IonText,
-  IonMenu
+  IonMenu,
 } from '@ionic/react';
 
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -22,12 +22,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Wrapper from '../components/wrapper';
-import { HeaderNameContext } from '../context/hearder';
+import {HeaderNameContext} from '../context/hearder';
 //import { Table } from 'semantic-ui-react'
 
 //let backgroundColor = 'grey';
 const columns = [
-  { id: 'name', label: 'To Pay', minWidth: 50, align: 'left' },
+  {id: 'name', label: 'To Pay', minWidth: 50, align: 'left'},
   {
     id: 'captured',
     label: 'Captured',
@@ -66,13 +66,12 @@ const columns = [
 ];
 
 function createData(name, captured, computed, values, percentage, allowed) {
-
-  return { name, captured, computed, values, percentage, allowed };
+  return {name, captured, computed, values, percentage, allowed};
 }
 
 const rows = [
   createData('To Pay(Cash Back)', 1324.11),
-  createData('Holiday', 140.350),
+  createData('Holiday', 140.35),
   createData('Employee Gross Prov', 6048.73),
   createData('Employer Gross Prov', 3271.34),
   createData('Gross Sick Benefits', 3760.03),
@@ -99,16 +98,14 @@ const useStyles = makeStyles({
   },
   container: {
     maxHeight: 440,
-
   },
-  text:{
-    fontWeight: "bold",
+  text: {
+    fontWeight: 'bold',
   },
-  cell:{
-    display: "flex",
-    flexDirection: "row"
+  cell: {
+    display: 'flex',
+    flexDirection: 'row',
   },
-
 });
 
 export default function CreateBatchEntry() {
@@ -116,11 +113,10 @@ export default function CreateBatchEntry() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   let backgroundColor = 'grey';
-  const { ChangeheaderName } = React.useContext(HeaderNameContext);
+  const {ChangeheaderName} = React.useContext(HeaderNameContext);
   React.useEffect(() => {
-    ChangeheaderName("Financial-Batch-Entry")
-  }, [])
-
+    ChangeheaderName('Financial-Batch-Entry');
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -132,73 +128,119 @@ export default function CreateBatchEntry() {
   };
 
   return (
-    <Wrapper >
+    <Wrapper>
       <Paper className={classes.root}>
         <TableContainer className={classes.container}>
           <Table inverted>
-
             <TableHead>
-              <div style={{ alignItems: 'center' }}>
-                <TableRow  >
-                  <TableCell > <Box className={classes.cell}><Typography className={classes.text}>Batch Number </Typography><Typography>: Tr 92 </Typography></Box></TableCell>
-                  <TableCell ><Box className={classes.cell}><Typography className={classes.text}>Employer Number </Typography><Typography>: N0621 </Typography></Box></TableCell>
-                  <TableCell ><Box className={classes.cell}><Typography className={classes.text}>Period </Typography><Typography>: 2020/06/01 </Typography></Box></TableCell>
-                  
+              <div style={{alignItems: 'center'}}>
+                <TableRow>
+                  <TableCell>
+                    {' '}
+                    <Box className={classes.cell}>
+                      <Typography className={classes.text}>
+                        Batch Number{' '}
+                      </Typography>
+                      <Typography>: Tr 92 </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box className={classes.cell}>
+                      <Typography className={classes.text}>
+                        Employer Number{' '}
+                      </Typography>
+                      <Typography>: N0621 </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box className={classes.cell}>
+                      <Typography className={classes.text}>Period </Typography>
+                      <Typography>: 2020/06/01 </Typography>
+                    </Box>
+                  </TableCell>
                 </TableRow>
-                <TableRow >
-                <TableCell ><Box className={classes.cell}><Typography className={classes.text}>Type of Entry </Typography><Typography>: Contributions </Typography></Box></TableCell>
-                <TableCell ><Box className={classes.cell}><Typography className={classes.text}>Employer Name</Typography><Typography>: KITCHEN CLASSIC </Typography></Box></TableCell>
-                <TableCell ><Box className={classes.cell}><Typography className={classes.text}>Month Pay Refers: </Typography><Typography>: 2020/06/02 </Typography></Box></TableCell>
-                
+                <TableRow>
+                  <TableCell>
+                    <Box className={classes.cell}>
+                      <Typography className={classes.text}>
+                        Type of Entry{' '}
+                      </Typography>
+                      <Typography>: Contributions </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box className={classes.cell}>
+                      <Typography className={classes.text}>
+                        Employer Name
+                      </Typography>
+                      <Typography>: KITCHEN CLASSIC </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box className={classes.cell}>
+                      <Typography className={classes.text}>
+                        Month Pay Refers:{' '}
+                      </Typography>
+                      <Typography>: 2020/06/02 </Typography>
+                    </Box>
+                  </TableCell>
                 </TableRow>
-                <TableRow >
-                <TableCell ><Box className={classes.cell}><Typography className={classes.text}>Trans/Payment Date</Typography><Typography>: 2020/07/29 </Typography></Box></TableCell>
-                <TableCell ><Box className={classes.cell}><Typography className={classes.text}>Status</Typography><Typography>: Unknown </Typography></Box></TableCell>
+                <TableRow>
+                  <TableCell>
+                    <Box className={classes.cell}>
+                      <Typography className={classes.text}>
+                        Trans/Payment Date
+                      </Typography>
+                      <Typography>: 2020/07/29 </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box className={classes.cell}>
+                      <Typography className={classes.text}>Status</Typography>
+                      <Typography>: Unknown </Typography>
+                    </Box>
+                  </TableCell>
                   {/* <TableCell>Trans/Payment Date: 2020/07/29</TableCell>
                   <TableCell>Status: Unknwon</TableCell> */}
                 </TableRow>
               </div>
             </TableHead>
           </Table>
-          <br></br>         
+          <br></br>
           <br></br>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
-              <div>
-              </div>            
+              <div></div>
 
               <TableRow>
                 {columns.map((column) => (
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth }}
+                    style={{minWidth: column.minWidth}}
                   >
                     {column.label}
                   </TableCell>
                 ))}
               </TableRow>
-
             </TableHead>
             <TableBody>
-              {rows.map(row => (
+              {rows.map((row) => (
                 <TableRow key={row.name}>
                   <TableCell component="th" scope="row">
                     {row.name}
                   </TableCell>
-                  <TableCell >
-                    <TextField
-                      style={{ width: "8rem" }}
-                      value={row.captured} /></TableCell>
-                  <TableCell >{row.computed}</TableCell>
-                  <TableCell >{row.values}</TableCell>
-                  <TableCell >{row.percentage}</TableCell>
-                  <TableCell >{row.allowed}</TableCell>
+                  <TableCell>
+                    <TextField style={{width: '8rem'}} value={row.captured} />
+                  </TableCell>
+                  <TableCell>{row.computed}</TableCell>
+                  <TableCell>{row.values}</TableCell>
+                  <TableCell>{row.percentage}</TableCell>
+                  <TableCell>{row.allowed}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 100]}
@@ -209,12 +251,19 @@ export default function CreateBatchEntry() {
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
-       <div>
-            <IonButton style={{ float: 'right' }} routerLink="./create-employer">Add Beneficiary </IonButton>
-            <IonButton style={{ float: 'right' }} routerLink="./next-create-batch-entry">Next </IonButton>
-            <IonButton style={{ float: 'right' }} >Save </IonButton>
-          </div>
+        <div>
+          <IonButton style={{float: 'right'}} routerLink="./create-employer">
+            Add Beneficiary{' '}
+          </IonButton>
+          <IonButton
+            style={{float: 'right'}}
+            routerLink="./next-create-batch-entry"
+          >
+            Next{' '}
+          </IonButton>
+          <IonButton style={{float: 'right'}}>Save </IonButton>
+        </div>
       </Paper>
-    </Wrapper >
+    </Wrapper>
   );
 }

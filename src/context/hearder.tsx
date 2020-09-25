@@ -1,20 +1,20 @@
 import React from 'react';
 
 export interface ChangeheadernameType {
-  hearder: string,
+  hearder: string;
   // eslint-disable-next-line
   ChangeheaderName: (hearder: string) => any;
 }
 
 const ChangeheadernameState: ChangeheadernameType = {
-    hearder: "home",
+  hearder: 'home',
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   ChangeheaderName: () => {},
 };
 
 export const HeaderNameContext = React.createContext<ChangeheadernameType>({
-    hearder: ChangeheadernameState.hearder,
- ChangeheaderName: ChangeheadernameState.ChangeheaderName,
+  hearder: ChangeheadernameState.hearder,
+  ChangeheaderName: ChangeheadernameState.ChangeheaderName,
 });
 
 interface Props {
@@ -22,10 +22,10 @@ interface Props {
 }
 
 const HeaderController = ({children}: Props) => {
-   const [hearder, setHeader] = React.useState("home")
+  const [hearder, setHeader] = React.useState('home');
 
   function ChangeheaderName(hearder: string) {
-    setHeader(hearder)
+    setHeader(hearder);
   }
 
   return (

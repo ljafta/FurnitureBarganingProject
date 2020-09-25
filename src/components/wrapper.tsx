@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -20,7 +20,6 @@ import MailIcon from '@material-ui/icons/Mail';
 import Box from '@material-ui/core/Box';
 
 import {AppMenuContext} from '../context/appMenuContext';
-
 
 const drawerWidth = 270;
 
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: - drawerWidth,
+    marginLeft: -drawerWidth,
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -57,13 +56,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 export default function Wrapper({children}: Props) {
   const classes = useStyles();
   const theme = useTheme();
 
-  const {open} = React.useContext(AppMenuContext)
+  const {open} = React.useContext(AppMenuContext);
 
   return (
     <Box className={classes.root}>
@@ -74,7 +73,7 @@ export default function Wrapper({children}: Props) {
         })}
       >
         <div className={classes.drawerHeader} />
-       {children}
+        {children}
       </main>
     </Box>
   );

@@ -1,14 +1,29 @@
 import {
   IonContent,
   IonButton,
-  ionChange,
+  IonModal,
+  IonFabButton,
+  IonIcon,
+  IonText,
   IonInput,
-  IonText
-
+  IonItem,
+  IonLabel,
+  IonList,
+  IonFab,
 } from '@ionic/react';
-
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {camera, trash, close, create} from 'ionicons/icons';
+//import { Tooltip } from 'ionic-tooltips';
+import {Tooltip} from '@progress/kendo-react-tooltip';
+import React, {useState} from 'react';
+import ReactTooltip from 'react-tooltip';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
+import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Link from '@material-ui/core/Link';
+//import Tooltip from "@material-ui/core/Tooltip";
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -17,85 +32,163 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
 import Wrapper from '../components/wrapper';
-import { HeaderNameContext } from '../context/hearder';
-import InputBase from '@material-ui/core/InputBase';
+import {HeaderNameContext} from '../context/hearder';
+import Modal from '../components/Modal';
+import UseThings from '../components/UseThings';
+import EditThings from '../components/EditThings';
+import {useParams} from 'react-router';
+
+import axios from 'axios';
 
 const columns = [
-  { id: 'name', label: 'Benefit Number', minWidth: 50 },
+  {id: 'name', label: 'Benefit Number', minWidth: 50},
   {
     id: 'population',
     label: 'Surname',
-    minWidth: 20,
-    minHeight: 20,
+    minWidth: 50,
     align: 'left',
   },
   {
-    id: 'firstname',
-    label: 'Firstname',
-    minWidth: 20,
-    minHeight: 20,
-    align: 'left',
-  },
-  {
-    id: 'idnumber',
-    label: 'ID Number',
-    minWidth: 20,
-    minHeight: 50,
+    id: 'density',
+    label: 'First Name',
+    minWidth: 50,
     align: 'left',
     format: (value) => value.toFixed(2),
   },
-
+  {
+    id: 'density',
+    label: 'ID Number',
+    minWidth: 50,
+    align: 'left',
+    format: (value) => value.toFixed(2),
+  },
+  {
+    id: 'density',
+    label: 'Employer',
+    minWidth: 50,
+    align: 'left',
+    format: (value) => value.toFixed(2),
+  },
+  {
+    id: 'action',
+    label: 'Action',
+    minWidth: 10,
+    minHeight: 10,
+    align: 'left',
+    format: (value) => value.toFixed(2),
+  },
 ];
 
-function createData(name, population, firstname, idnumber) {
-
-  return { name, population, firstname, idnumber };
+function createData(id, name, population, density, contact) {
+  return {id, name, population, density, contact};
 }
 
 const rows = [
-  createData('1400276', 'Sign', 'Jafta', '787245932322'),
-  createData('1400316', 'Mkhize', 'Nguni', '797245932322'),
-  createData('1400417', 'NCheety', 'Siza', '767245932322'),
-  createData('1400517', 'Jutu', 'Toets', '777245932322'),
-  createData('1400518', 'Lumkile', 'More', '727245932322'),
-  createData('14006120', 'Trevor', 'Paul', '717245932322'),
-
+  createData('1', 'AO129', 'L.V jafta', 'GP', '011155'),
+  createData('2', 'AO130', 'Thuso lop', 'GP', '012-1212'),
+  createData('3', 'AO131', 'N.J Viode', 'GP', '021-6589'),
+  createData('4', 'AO132', 'Comrade', 'GP', '051-12454'),
+  createData('5', 'AO133', 'We think code', 'GP', '061-456'),
+  createData('6', 'AO134', 'Best school ever', 'GP', '15465'),
 ];
+
+const styles = {
+  tooltip: {
+    fontSize: 15,
+  },
+};
 
 const useStyles = makeStyles({
   root: {
     width: '100%',
   },
+
   container: {
     maxHeight: 440,
   },
+  size: {
+    maxHeight: 5,
+    color: 'black',
+    width: '20%',
+    spacing: 1,
+  },
 });
 
-export default function EmplyeeHeadTable() {
+export default function DoctorEnquire() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rowState, setRowState] = React.useState(rows);
-  const { ChangeheaderName } = React.useContext(HeaderNameContext);
+  const {ChangeheaderName} = React.useContext(HeaderNameContext);
+  const {id} = useParams();
+
   React.useEffect(() => {
-    ChangeheaderName("Employee-Overview")
+    ChangeheaderName('Employee-Overview');
 
-  }, [])
+    componentgetAll();
+  }, []);
 
+  const endpointget = `http://dummy.restapiexample.com/api/v1/employees`;
 
-  function FilterTableData(value) {
+  async function componentgetAll() {
+    const res = await axios.get(endpointget);
+    setRowState(res.data.data);
+    console.log('res', res.data.data);
+  }
 
-    const reg = /(^a0)(?:\D*\d){3}/
-    if (reg.test(value.toLowerCase())) {
-      const data = rows.filter(row => row.name.toLowerCase().includes(value.toLowerCase()));
-      setRowState(data);
-    } else {
-      const data = rows.filter(row => row.population.toLowerCase().includes(value.toLowerCase()));
-      setRowState(data);
+  //const  endpointdel  =  `http://dummy.restapiexample.com/api/v1/delete/${id}`;
+
+  async function componentDel() {
+    try {
+      debugger;
+      const res = await axios.delete(
+        `http://dummy.restapiexample.com/api/v1/delete/${id}`
+      );
+      setRowState(res.data.data);
+      console.log('res', res.data);
+    } catch (e) {
+      console.log(`😱 Axios request failed: ${e}`);
     }
   }
+
+  let {state, dispatch} = UseThings();
+
+  const editEntry = (columns, rows) => {
+    // debugger;
+    let payload = {index: columns, data: rows};
+    dispatch({type: 'EDIT_THING', ...payload});
+  };
+
+  const [modalInfo, setModalInfo] = useState({isVisible: false, value: ''});
+
+  const addNewEntry = (_data) => {
+    //debugger;
+    dispatch({type: 'ADD_THING', data: _data});
+  };
+
+  const deleteEntry = (_index) => {
+    console.log(_index);
+    dispatch({type: 'DELETE_THING', index: _index});
+  };
+
+  const modalInfoWithEntry = (_entryValue, _index) => {
+    //debugger;
+    setModalInfo({isVisible: true, value: _entryValue, index: _index});
+  };
+
+  const handleFormSubmit = (_formResponse) => {
+    if (_formResponse.value) {
+      modalInfo.index != null
+        ? editEntry(modalInfo.index, _formResponse.value)
+        : addNewEntry(_formResponse.value);
+    }
+    // reset the mondalInfo state
+    setModalInfo({...modalInfo, isVisible: false, value: []});
+  };
+
+  const [showModal, setShowModal] = useState(false);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -104,62 +197,119 @@ export default function EmplyeeHeadTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  function FilterTableData(value) {
+    const reg = /(^ao)/;
+    if (reg.test(value.toLowerCase())) {
+      const data = rows.filter((row) =>
+        row.occupation.toLowerCase().includes(value.toLowerCase())
+      );
+      setRowState(data);
+    } else {
+      const data = rows.filter((row) =>
+        row.population.toLowerCase().includes(value.toLowerCase())
+      );
+      setRowState(data);
+    }
+  }
 
   return (
-    <Wrapper >
-      <Paper className={classes.root}>
-        <TableContainer className={classes.container}>
-          <input className={classes.input} placeholder="Search..." onChange={(e) => { FilterTableData(e.target.value) }} />
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rowState.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number' ? column.format(value) : value}
-                          {/* <input
-                            type='text'
-                           
-                             /> */}
+    <IonContent>
+      <Wrapper>
+        <Paper className={classes.root}>
+          <TableContainer className={classes.container}>
+            <input
+              placeholder="Search..."
+              onChange={(e) => {
+                FilterTableData(e.target.value);
+              }}
+            />
+            {/* <IonText placeholder="Search..." onChange={(e)=>{FilterTableData(e.target.value)}}></IonText> */}
 
-                        </TableCell>
-                      );
-                    })}
+            <Table stickyHeader aria-label="sticky table">
+              <EditThings
+                initValue={modalInfo}
+                handleFormSubmit={handleFormSubmit}
+              />
+
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{minWidth: column.minWidth}}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rowState.map((row) => (
+                  <TableRow key={row.id} className={classes.size}>
+                    <TableCell component="th" scope="row">
+                      {row.id}
+                    </TableCell>
+                    <TableCell> {row.employee_name}</TableCell>
+                    <TableCell>{row.employee_salary} </TableCell>
+                    <TableCell>{row.employee_salary} </TableCell>
+                    <TableCell>{row.employee_name} </TableCell>
+                    <TableCell>
+                      <div>
+                        <IonModal isOpen={showModal} cssClass="my-custom-class">
+                          <Modal></Modal>
+                          <IonButton onClick={() => setShowModal(false)}>
+                            Close
+                          </IonButton>
+                        </IonModal>
+                        <IonButton
+                          title="Edit"
+                          routerLink={`/doctor-details/${row.id}`}
+                        >
+                          {/* <IonButton title="Edit"  routerLink={"/doctor-details/"+ row.id}> */}
+
+                          <IonIcon icon={create}></IonIcon>
+                        </IonButton>
+                        {/* <IonButton  title="Edit" onClick={() => alert("Are you sure you want delete this record " + row.name)} routerLink="./doctor-enquire">
+                    <IonIcon icon={create}></IonIcon>
+                  </IonButton>*/}
+
+                        {/* //componentDel */}
+                        <IonButton
+                          title="Delete"
+                          onClick={() => componentDel(row.id)}
+                        >
+                          <IonIcon icon={trash}></IonIcon>
+                        </IonButton>
+                      </div>
+                    </TableCell>
                   </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={rowState.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-        <IonButton style={{ float: 'right' }} routerLink="./create-employer">Create New </IonButton>
-
-      </Paper>
-    </Wrapper >
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rowState.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+          <div>
+            <IonButton
+              style={{float: 'right'}}
+              routerLink="./create-employee-form"
+            >
+              Create New
+            </IonButton>
+            <IonButton style={{float: 'right'}} routerLink="./create">
+              Print{' '}
+            </IonButton>
+          </div>
+        </Paper>
+      </Wrapper>
+    </IonContent>
   );
 }

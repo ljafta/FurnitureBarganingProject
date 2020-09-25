@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface AppMenuStateType {
-  open: boolean,
+  open: boolean;
   // eslint-disable-next-line
   handleAppMenuOpen: (open: boolean) => any;
 }
@@ -13,8 +13,8 @@ const AppMenuState: AppMenuStateType = {
 };
 
 export const AppMenuContext = React.createContext<AppMenuStateType>({
- open: AppMenuState.open,
- handleAppMenuOpen: AppMenuState.handleAppMenuOpen,
+  open: AppMenuState.open,
+  handleAppMenuOpen: AppMenuState.handleAppMenuOpen,
 });
 
 interface Props {
@@ -22,10 +22,10 @@ interface Props {
 }
 
 const AppMenuController = ({children}: Props) => {
-   const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   function handleAppMenuOpen(open: boolean) {
-    setOpen(open)
+    setOpen(open);
   }
 
   return (

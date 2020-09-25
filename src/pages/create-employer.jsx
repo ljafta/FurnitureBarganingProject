@@ -7,55 +7,51 @@ import {
   IonSelect,
   IonSelectOption,
   IonText,
-  IonMenu
-
+  IonMenu,
 } from '@ionic/react';
 
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Wrapper from '../components/wrapper';
-import MenuItem from "@material-ui/core/MenuItem";
-import Grid from "@material-ui/core/Grid";
-import { HeaderNameContext } from '../context/hearder';
+import MenuItem from '@material-ui/core/MenuItem';
+import Grid from '@material-ui/core/Grid';
+import {HeaderNameContext} from '../context/hearder';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(2),
       width: '30ch',
-     height: '29px'
+      height: '29px',
     },
   },
 }));
 
 export default function FormPropsTextFields() {
-  const [currency, setCurrency] = React.useState("EUR");
+  const [currency, setCurrency] = React.useState('EUR');
   const classes = useStyles();
-  const {ChangeheaderName}=React.useContext(HeaderNameContext);
-  React.useEffect(()=>{
-    ChangeheaderName("Create Employer")
-  }, [])
-
-  
+  const {ChangeheaderName} = React.useContext(HeaderNameContext);
+  React.useEffect(() => {
+    ChangeheaderName('Create Employer');
+  }, []);
 
   const scrollTo = (ref) => {
     if (ref /* + other conditions */) {
-      ref.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      ref.scrollIntoView({behavior: 'smooth', block: 'start'});
     }
-  }
-  
+  };
 
   const currencies = [
     {
-      value: "Closed",
-      label: "closed"
+      value: 'Closed',
+      label: 'closed',
     },
     {
-      value: "Open",
-      label: "open"
-    }
-  ]
+      value: 'Open',
+      label: 'open',
+    },
+  ];
   const handleChange = (event) => {
     setCurrency(event.target.value);
   };
@@ -63,15 +59,14 @@ export default function FormPropsTextFields() {
   return (
     <Wrapper>
       <form className={classes.root} noValidate autoComplete="off">
-
-        <div className="container">          
+        <div className="container">
           <TextField
             required
             id="outlined-required"
             label="Employer Number"
             ///defaultValue="Employer Number"
             variant="outlined"
-          // helperText="Please enter employee Number"
+            // helperText="Please enter employee Number"
           />
           {/* <IonItem>
       <IonLabel>Select a Dog</IonLabel>
@@ -107,14 +102,14 @@ export default function FormPropsTextFields() {
             //defaultValue="Contact Person"
             variant="outlined"
           />
-           <TextField
+          <TextField
             required
             id="outlined-required"
             label="Employer Name"
             //defaultValue="Employer Name"
             variant="outlined"
           />
-          
+
           <TextField
             id="date"
             label="Status Change Date "
@@ -123,7 +118,7 @@ export default function FormPropsTextFields() {
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
-            }}  
+            }}
           />
           <TextField
             required
@@ -132,7 +127,7 @@ export default function FormPropsTextFields() {
             //defaultValue="Contact Person's ID Number"
             variant="outlined"
           />
-            <TextField
+          <TextField
             required
             id="outlined-required"
             label="Tading Name"
@@ -143,13 +138,13 @@ export default function FormPropsTextFields() {
             required
             id="outlined-required"
             label="Contact Phone Number"
-           // defaultValue="Contact Phone Number"
+            // defaultValue="Contact Phone Number"
             variant="outlined"
             inputProps={{
-              style: { textAlign: "right" }
+              style: {textAlign: 'right'},
             }}
           />
-          </div>      
+        </div>
         <div className="textsize">
           <TextField
             required
@@ -171,8 +166,8 @@ export default function FormPropsTextFields() {
             label="Firm Phone Number"
             //defaultValue="Firm Phone Number"
             variant="outlined"
-          />          
-        </div>       
+          />
+        </div>
         <div className="textsize">
           <TextField
             required
@@ -195,8 +190,8 @@ export default function FormPropsTextFields() {
             //defaultValue="Firm Phone Number"
             variant="outlined"
           />
-          </div>
-          <div className="textsize">
+        </div>
+        <div className="textsize">
           <TextField
             required
             id="outlined-required"
@@ -208,7 +203,7 @@ export default function FormPropsTextFields() {
             required
             id="outlined-disabled"
             label="Postal Code"
-           // defaultValue="Postal Address"
+            // defaultValue="Postal Address"
             variant="outlined"
           />
           <TextField
@@ -218,18 +213,17 @@ export default function FormPropsTextFields() {
             //defaultValue="Firm Phone Number"
             variant="outlined"
           />
-         
-         </div>
-         <div className="container">
+        </div>
+        <div className="container">
           <TextField
             required
             id="outlined-required"
             label="Zip Code"
             //defaultValue="Factory Address"
             variant="outlined"
-          />                             
-          </div>
-          <div className="container">
+          />
+        </div>
+        <div className="container">
           <TextField
             id="filled-select-currency"
             select
@@ -245,14 +239,14 @@ export default function FormPropsTextFields() {
               </MenuItem>
             ))}
           </TextField>
-           <TextField
+          <TextField
             required
             id="outlined-required"
             label="Magisterial District"
             //defaultValue="Factory Address"
             variant="outlined"
-          />      
-           <TextField
+          />
+          <TextField
             id="date"
             label="Date Joined Association "
             type="date"
@@ -260,9 +254,9 @@ export default function FormPropsTextFields() {
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
-            }}  
+            }}
           />
-           <TextField
+          <TextField
             id="filled-select-currency"
             select
             label="Under 5 Employees"
@@ -276,11 +270,10 @@ export default function FormPropsTextFields() {
                 {option.label}
               </MenuItem>
             ))}
-            </TextField>
-                                     
-            </div>
-            <div className="container" >
-            <TextField
+          </TextField>
+        </div>
+        <div className="container">
+          <TextField
             id="date"
             label="Commencement Date "
             type="date"
@@ -288,7 +281,7 @@ export default function FormPropsTextFields() {
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
-            }}  
+            }}
           />
           <TextField
             id="filled-select-currency"
@@ -305,8 +298,8 @@ export default function FormPropsTextFields() {
               </MenuItem>
             ))}
           </TextField>
-           
-           <TextField
+
+          <TextField
             id="date"
             label="Returns Due payment date "
             type="date"
@@ -314,7 +307,7 @@ export default function FormPropsTextFields() {
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
-            }}  
+            }}
           />
           <TextField
             required
@@ -322,13 +315,19 @@ export default function FormPropsTextFields() {
             label="Name"
             //defaultValue="Factory Address"
             variant="outlined"
-          />                                       
-          </div>
-         
+          />
+        </div>
+
         <div>
-          <IonButton style={{ float: 'right' }} routerLink="./create-employer">Print </IonButton>
-          <IonButton style={{ float: 'right' }} routerLink="./create-employer">Clear Fields </IonButton>
-          <IonButton style={{ float: 'right' }} routerLink="./create-employer">Save </IonButton>
+          <IonButton style={{float: 'right'}} routerLink="./create-employer">
+            Print{' '}
+          </IonButton>
+          <IonButton style={{float: 'right'}} routerLink="./create-employer">
+            Clear Fields{' '}
+          </IonButton>
+          <IonButton style={{float: 'right'}} routerLink="./create-employer">
+            Save{' '}
+          </IonButton>
         </div>
       </form>
     </Wrapper>

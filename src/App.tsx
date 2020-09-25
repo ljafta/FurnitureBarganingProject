@@ -1,5 +1,3 @@
-
-
 import Page from './pages/Page';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -25,64 +23,137 @@ import PersistentDrawerLeft from './components/swap';
 
 // import PersistentDrawerLeft from './components/shift';
 
-import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router-dom';
+import {IonApp, IonRouterOutlet, IonSplitPane} from '@ionic/react';
+import {IonReactRouter} from '@ionic/react-router';
+import {Redirect, Route} from 'react-router-dom';
 
 // File imports
-
+import Tested from './pages/test';
+import DoctorEnquire from './pages/doctorbrowse';
+import CreateEmployer from './pages/create-employer-form';
+import CreateEmployee from './pages/create-employee-form';
+import CreateDoc from './pages/create-doct-form';
+import EmployerDetails from './pages/employer-details';
+import DoctorDetails from './pages/doctor-details';
+import CreateDoctor from './pages/create-doctor';
+import Comp from './pages/comp';
+import DoctorReference from './pages/doctor-reference-data';
 import EnhancedTable from './pages/load';
 import FormPropsTextFields from './pages/create-employer';
 import FinancialBatch from './pages/financials-batch-entry';
 import NextCreateBatchEntry from './pages/next-create-batch-entry';
 import FinalCreateBatchEntry from './pages/final-create-batch-entry';
-import MaterialTableDemo from './pages/empol';
-import SpanningTable from './pages/spanning';
-import FormDocsTextFields from './pages/doctorbrowse';
+// import FormDocsTextFields from './pages/doctorbrowse';
 import EmplyeeHeadTable from './pages/employee-browse';
 import TableHeadTable from './pages/utilisationdetails';
-import CreateBatchEntry from './pages/create-batch-entry'
+import CreateBatchEntry from './pages/create-batch-entry';
 import EmployerHeadTable from './pages/employer-employee';
-import DenseTable from './pages/doctorbrowse';
+// import DenseTable from './pages/doctorbrowse';
 import StickyHeadTable from './pages/employerbrowser';
 import AppMenuController from './context/appMenuContext';
 import HeaderController from './context/hearder';
 
 function App() {
-  return (   
+  return (
     <AppMenuController>
-       <HeaderController>
-    <IonApp>
-      <IonReactRouter>
-      <PersistentDrawerLeft />
+      <HeaderController>
+        <IonApp>
+          <IonReactRouter>
+            <PersistentDrawerLeft />
 
-        <IonSplitPane contentId="main">
-          <IonRouterOutlet id="main">
-          <Redirect exact path="/" to="/home"/>
-            {/* <Route exact path="/home" component={PersistentDrawerLeft}/> */}
-            <Route exact path="/doctorbrowse" component={DenseTable}/>
-            {/* <Route exact path="/employe-enquire" component={MultilineTextFields}/>
-            // <Route exact path="/employer-browse" component={MaterialTableDemo}/> */}
-            <Route exact path="/load" component={EnhancedTable}/>
-            <Route exact path="/employerbrowser" component={StickyHeadTable}/>
-            <Route exact path="/employer-employee" component={EmployerHeadTable}/>
-            <Route exact path="/utilisationdetails" component={TableHeadTable}/>
-            <Route exact path="/create-batch-entry" component={CreateBatchEntry}/>
-            <Route exact path="/employee-browse" component={EmplyeeHeadTable}/>
-            <Route exact path="/create-employer" component={FormPropsTextFields}/>
-            <Route exact path="/doctorbrowse" component={FormDocsTextFields}/>
-            <Route exact path="/financials-batch-entry" component={FinancialBatch}/>
-            <Route exact path="/empol" component={MaterialTableDemo}/>
-            <Route exact path="/spanning" component={SpanningTable}/>
-            <Route exact path="/next-create-batch-entry" component={NextCreateBatchEntry}/>
-            <Route exact path="/final-create-batch-entry" component={FinalCreateBatchEntry}/>
-          </IonRouterOutlet>
-        </IonSplitPane>
-      </IonReactRouter>
-    </IonApp>
-    </HeaderController>
+            <IonSplitPane contentId="main">
+              <IonRouterOutlet id="main">
+                <Redirect exact path="/" to="/home" />
+
+                {/* <Route exact path="/home" component={PersistentDrawerLeft}/> */}
+                {/* <Route exact path="/doctorbrowse" component={DenseTable}/> */}
+
+                <Route exact path="/load" component={EnhancedTable} />
+                <Route
+                  exact
+                  path="/employerbrowser"
+                  component={StickyHeadTable}
+                />
+                <Route
+                  exact
+                  path="/employer-employee"
+                  component={EmployerHeadTable}
+                />
+                <Route
+                  exact
+                  path="/utilisationdetails"
+                  component={TableHeadTable}
+                />
+                <Route
+                  exact
+                  path="/create-batch-entry"
+                  component={CreateBatchEntry}
+                />
+                <Route
+                  exact
+                  path="/employee-browse"
+                  component={EmplyeeHeadTable}
+                />
+                <Route
+                  exact
+                  path="/create-employer"
+                  component={FormPropsTextFields}
+                />
+                {/* <Route exact path="/doctorbrowse" component={FormDocsTextFields}/> */}
+                <Route
+                  exact
+                  path="/financials-batch-entry"
+                  component={FinancialBatch}
+                />
+                <Route
+                  exact
+                  path="/next-create-batch-entry"
+                  component={NextCreateBatchEntry}
+                />
+                <Route
+                  exact
+                  path="/final-create-batch-entry"
+                  component={FinalCreateBatchEntry}
+                />
+                <Route
+                  exact
+                  path="/doctor-reference-data"
+                  component={DoctorReference}
+                />
+                <Route exact path="/create-doct-form" component={CreateDoc} />
+                <Route
+                  exact
+                  path="/create-employer-form"
+                  component={CreateEmployer}
+                />
+                <Route
+                  exact
+                  path="/create-employee-form"
+                  component={CreateEmployee}
+                />
+                <Route exact path="/test" component={Tested} />
+                {/* <Route exact path={`${"/doctor-details"}/:id`}component={DoctorDetails}/> */}
+                {/* <Route exact path="/doctor-details/:1" component={DoctorDetails}/>  */}
+
+                <Route
+                  exact
+                  path="/employer-details/:id"
+                  component={EmployerDetails}
+                />
+                <Route
+                  exact
+                  path="/doctor-details/:id"
+                  component={DoctorDetails}
+                />
+                <Route exact path="/comp" component={Comp} />
+                <Route exact path="/create-doctor" component={CreateDoctor} />
+                <Route exact path="/doctorbrowse" component={DoctorEnquire} />
+              </IonRouterOutlet>
+            </IonSplitPane>
+          </IonReactRouter>
+        </IonApp>
+      </HeaderController>
     </AppMenuController>
-  
-  )
+  );
 }
 export default App;

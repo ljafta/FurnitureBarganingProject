@@ -10,12 +10,12 @@ import {
   IonMenuToggle,
   IonNote,
   IonToolbar,
-  IonButton
+  IonButton,
 } from '@ionic/react';
 
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -33,8 +33,21 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuBar from './MenuBar';
-import { AppMenuContext } from '../context/appMenuContext';
-import { HeaderNameContext } from '../context/hearder';
+import {AppMenuContext} from '../context/appMenuContext';
+import {HeaderNameContext} from '../context/hearder';
+import {camera, trash, close, create} from 'ionicons/icons';
+import {AccessAlarm, ThreeDRotation} from '@material-ui/icons';
+import {Icon} from 'semantic-ui-react';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import AccessibilityIcon from '@material-ui/icons/Accessibility';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+// import Employer from '../../images/employer.svg'
 
 const drawerWidth = 270;
 
@@ -93,70 +106,115 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
 export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
-  const {hearder}= React.useContext(HeaderNameContext)
+  const {hearder} = React.useContext(HeaderNameContext);
   // const [open, setOpen] = React.useState(false);
 
   const items = [
     {
-
-      label: 'Masters Module',
+      label: 'Employer',
       header: true,
+
+      //icon: 'fa fa-database fa-fw',
+      // <ion-icon name="arrow-forward"></ion-icon>
+      Icon: <AccountBalanceIcon className={classes.icon} />,
+      // <img src={Employer} alt="Employer" />
+
       items: [
-        { label: 'Employer', url: '/employerbrowser' },
-         { label: 'Employee', url: '/employee-browse' },
-        //  { label: 'Doctor', url: '/employer-enquire' },
-        { label: 'Employer-Employee', url: '/employer-employee' },
-        { label: 'Doctor-Employee', url: '/doctorbrowse' },
+        {label: 'Manage', url: '/employerbrowser'},
+        {label: 'Reporting', url: '/employee-browse'},
+        //   { label: 'Reference Data', url: '/employer-enquire' },
+        // { label: 'Employer-Employee', url: '/employer-employee' },
+        // { label: 'Doctor-Employee', url: '/doctorbrowse' },
+      ],
+    },
+    {
+      label: 'Employee',
+      header: true,
+      Icon: <AccessibilityIcon className={classes.icon} />,
+
+      items: [
+        {label: 'Manage', url: '/employee-browse'},
+        {label: 'Reporting', url: '/load'},
+        // { label: 'Reference Data', url: '/doctor-reference-data' },
+      ],
+    },
+    {
+      label: 'Doctors',
+      header: true,
+      Icon: <LocalHospitalIcon className={classes.icon} />,
+
+      items: [
+        {label: 'Manage', url: '/doctorbrowse'},
+        {label: 'Reporting', url: '/load'},
+        // { label: 'Reference Data', url: '/doctor-reference-data' },
       ],
     },
     {
       label: 'Financials',
       header: true,
-      items: [
-        { label: 'Financials-Batch-Entry', url: '/financials-batch-entry' },
-        { label: 'Unbalanced-Batch-Rev', url: '/load' },
-        { label: 'Utilisation-Details', url: '/load' },
+      Icon: <MonetizationOnIcon className={classes.icon} />,
 
+      items: [
+        {label: 'Financials-Batch-Entry', url: '/financials-batch-entry'},
+        {label: 'Unbalanced-Batch-Rev', url: '/load'},
+        {label: 'Utilisation-Details', url: '/load'},
       ],
     },
 
     {
-      label: 'Tables',
+      label: 'Reference Data',
       header: true,
-      items: [
-        { label: 'Area Code', url: '/load' },
-        { label: 'Union Code', url: '/load' },
-        { label: 'Unitisation Details', url: '/utilisationdetails' },
-      ]
-    },
-    {
 
-      label: 'Locations',
-      header: true,
-      items: [
-        { label: 'locations', url: '/load' },
+      Icon: <MenuBookIcon className={classes.icon} />,
 
+      items: [
+        {label: 'Employer', url: '/doctor-reference-data'},
+        {label: 'Employeee', url: '/load'},
+        {label: 'Doctor', url: '/doctor-reference-data'},
+        {label: 'Financials', url: '/utilisationdetails'},
+        {label: 'Shared', url: '/utilisationdetails'},
+        ,
       ],
     },
-  ]
+  ];
 
   const depthStep = 0;
   const depth = 0;
   const expand = 0;
 
-  const { open, handleAppMenuOpen } = React.useContext(AppMenuContext)
+  const {open, handleAppMenuOpen} = React.useContext(AppMenuContext);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const openAnchorEl = Boolean(anchorEl);
+  console.log('open ', open);
 
-  console.log("open ", open)
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setAuth(event.target.checked);
+  // };
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position="static"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
@@ -171,9 +229,39 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" className={classes.title}>
             {hearder}
           </Typography>
+
+          <div>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={openAnchorEl}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -187,11 +275,21 @@ export default function PersistentDrawerLeft() {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={() => handleAppMenuOpen(false)}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
           </IconButton>
         </div>
         <Divider />
-        <MenuBar items={items} depthStep={depthStep} depth={depth} expanded={expand} />
+        <MenuBar
+          items={items}
+          depthStep={depthStep}
+          depth={depth}
+          expanded={expand}
+        />
+
         {/* <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
@@ -201,42 +299,7 @@ export default function PersistentDrawerLeft() {
           ))}
         </List> */}
         <Divider />
-
       </Drawer>
-
-
-
-      {/* <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-          facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-          gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-          donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-          Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-          imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-          arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-          donec massa sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-          facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-          tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-          consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-          vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-          hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-          tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-          nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-          accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </main> */}
-
     </div>
   );
 }
