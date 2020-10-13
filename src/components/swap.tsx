@@ -11,6 +11,7 @@ import {
   IonNote,
   IonToolbar,
   IonButton,
+  IonTitle,
 } from '@ionic/react';
 
 import React from 'react';
@@ -71,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+  },
+  logo: {
+    marginLeft: theme.spacing(2),
   },
   hide: {
     display: 'none',
@@ -133,9 +137,6 @@ export default function PersistentDrawerLeft() {
       items: [
         {label: 'Manage', url: '/employerbrowser'},
         {label: 'Reporting', url: '/employee-browse'},
-        //   { label: 'Reference Data', url: '/employer-enquire' },
-        // { label: 'Employer-Employee', url: '/employer-employee' },
-        // { label: 'Doctor-Employee', url: '/doctorbrowse' },
       ],
     },
     {
@@ -160,6 +161,7 @@ export default function PersistentDrawerLeft() {
         // { label: 'Reference Data', url: '/doctor-reference-data' },
       ],
     },
+    
     {
       label: 'Financials',
       header: true,
@@ -179,11 +181,11 @@ export default function PersistentDrawerLeft() {
       Icon: <MenuBookIcon className={classes.icon} />,
 
       items: [
-        {label: 'Employer', url: '/doctor-reference-data'},
-        {label: 'Employeee', url: '/load'},
+        {label: 'Employer', url: '/employer-reference-data'},
+        {label: 'Employee', url: '/employee-reference-data'},
         {label: 'Doctor', url: '/doctor-reference-data'},
         {label: 'Financials', url: '/utilisationdetails'},
-        {label: 'Shared', url: '/utilisationdetails'},
+        {label: 'Shared', url: '/shared-reference-data'},
         ,
       ],
     },
@@ -229,9 +231,18 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
+
           <Typography variant="h6" className={classes.title}>
             {hearder}
           </Typography>
+
+          {/* <div text-center>
+           <IconButton                  
+              color="inherit" className="align-self: center">
+             <img alt="Furniture B" height="40"   src="img/logo.png"/>
+            </IconButton> 
+            </div>
+              */}
 
           <div>
             <IconButton
@@ -243,6 +254,7 @@ export default function PersistentDrawerLeft() {
             >
               <AccountCircle />
             </IconButton>
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}

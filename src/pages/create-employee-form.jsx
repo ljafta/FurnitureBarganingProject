@@ -139,30 +139,18 @@ export default function CreateEmployee() {
               </IonItem>
             </ion-col>
             <ion-col col-9>
-              <ion-item class="padding-left-2px">
-                <ion-label position="stacked">Fund Type</ion-label>
-
-                <IonSelect required>
-                  <IonSelectOption value="active">Provident</IonSelectOption>
-                  <IonSelectOption value="closed">Pension</IonSelectOption>
-                </IonSelect>
-              </ion-item>
-            </ion-col>
-            <ion-col col-9>
               <IonItem>
-                <IonLabel position="stacked">Clock Number:</IonLabel>
+                <IonLabel position="stacked">FirstName:</IonLabel>
                 <IonInput
                   type="text"
-                  name="contactname"
+                  name="contact"
                   value={rowState && rowState.employee_name}
                   onInput={(e) => setInputValue(e.target.value)}
                   required
                 ></IonInput>
               </IonItem>
             </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-3>
+            <ion-col col-9>
               <IonItem>
                 <IonLabel position="stacked">Surname:</IonLabel>
                 <IonInput
@@ -173,6 +161,20 @@ export default function CreateEmployee() {
                   required
                 ></IonInput>
               </IonItem>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-3>
+              <IonItem>
+                <IonLabel position="stacked">ID Number:</IonLabel>
+                <IonInput
+                  type="text"
+                  name="accountnumber"
+                  value={rowState && rowState.employee_name}
+                  onInput={(e) => setInputValue(e.target.value)}
+                ></IonInput>
+              </IonItem>
+
               <ion-item class="padding-left-2px">
                 <ion-label position="stacked">Sex</ion-label>
                 <IonSelect>
@@ -201,16 +203,14 @@ export default function CreateEmployee() {
               </ion-item>
             </ion-col>
             <ion-col col-3>
-              <IonItem>
-                <IonLabel position="stacked">FirstName:</IonLabel>
-                <IonInput
-                  type="text"
-                  name="contact"
-                  value={rowState && rowState.employee_name}
-                  onInput={(e) => setInputValue(e.target.value)}
-                  required
-                ></IonInput>
-              </IonItem>
+              <ion-item class="padding-left-2px">
+                <ion-label position="stacked">Fund Type</ion-label>
+
+                <IonSelect required>
+                  <IonSelectOption value="active">Provident</IonSelectOption>
+                  <IonSelectOption value="closed">Pension</IonSelectOption>
+                </IonSelect>
+              </ion-item>
               <IonItem>
                 <IonLabel position="stacked">Other name:</IonLabel>
                 <IonInput
@@ -223,6 +223,8 @@ export default function CreateEmployee() {
               </IonItem>
             </ion-col>
           </ion-row>
+          <br></br>
+          <br></br>
           <ion-row>
             <ion-col col-3>
               <IonItem>
@@ -316,7 +318,8 @@ export default function CreateEmployee() {
               </IonItem>
             </ion-col>
           </ion-row>
-
+          <br></br>
+          <br></br>
           <ion-row>
             <ion-col col-3>
               <ion-item class="padding-left-2px">
@@ -397,10 +400,11 @@ export default function CreateEmployee() {
                 <IonLabel position="stacked">First Contribution Date:</IonLabel>
 
                 <IonInput
-                  type="text"
+                  type="date"
                   name="name"
                   value={rowState && rowState.employee_name}
                   onInput={(e) => setInputValue(e.target.value)}
+                  defaultValue="2020-05-24"
                   required
                 />
               </IonItem>
@@ -409,7 +413,8 @@ export default function CreateEmployee() {
               <IonItem>
                 <IonLabel position="stacked">Last Contribution Date:</IonLabel>
                 <IonInput
-                  type="text"
+                  type="date"
+                  defaultValue="2020-05-24"
                   name="contactname"
                   value={rowState && rowState.employee_name}
                   onInput={(e) => setInputValue(e.target.value)}

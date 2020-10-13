@@ -11,7 +11,7 @@ import {
   IonList,
   IonFab,
 } from '@ionic/react';
-import {camera, trash, close, create} from 'ionicons/icons';
+import {camera, trash, close, create, cloudDownloadSharp} from 'ionicons/icons';
 //import { Tooltip } from 'ionic-tooltips';
 import {Tooltip} from '@progress/kendo-react-tooltip';
 import React, {useState} from 'react';
@@ -230,7 +230,7 @@ export default function DoctorEnquire() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rowState.map((row) => (
+                {rowState && rowState.map((row) => (
                   <TableRow key={row.id} className={classes.size}>
                     <TableCell component="th" scope="row">
                       {row.id}
@@ -264,6 +264,12 @@ export default function DoctorEnquire() {
                         >
                           <IonIcon icon={trash}></IonIcon>
                         </IonButton>
+                        <IonButton
+                          title="Print"
+                          onClick={() => componentDel(row.id)}
+                        >
+                          <IonIcon icon={cloudDownloadSharp}></IonIcon>
+                        </IonButton>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -272,7 +278,7 @@ export default function DoctorEnquire() {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[25, 100]}
             component="div"
             count={rowState.length}
             rowsPerPage={rowsPerPage}

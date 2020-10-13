@@ -50,7 +50,7 @@ export default function DoctorDetails(props) {
     defaultValues: {...initialValues},
     mode: 'onChange',
   });
-  const {id} = useParams();
+  const {Id} = useParams();
   const {ChangeheaderName} = React.useContext(HeaderNameContext);
   const [rowState, setRowState] = React.useState([]);
 
@@ -66,17 +66,20 @@ export default function DoctorDetails(props) {
     // componentSave();
   }, []);
 
-  const endpointsave = `http://dummy.restapiexample.com/api/v1/update/${id}`;
+  const endpointsave = `http://dummy.restapiexample.com/api/v1/update/${Id}`;
 
-  const endpointedit = `http://dummy.restapiexample.com/api/v1/employee/${id}`;
+  const endpointedit = `http://dummy.restapiexample.com/api/v1/employee/${Id}`;
 
   async function componentEdit() {
     try {
+      console.log('results from Get', Id);
+
       const res = await axios.get(
-        `http://dummy.restapiexample.com/api/v1/employee/${id}`
+        `https://3zpjzh9s97.execute-api.eu-west-1.amazonaws.com/dev/doctor/${Id}`
+        
       );
       setRowState(res.data.data);
-      debugger;
+      //debugger;
       console.log('results from Get', res.data);
     } catch (e) {
       console.log(`😱 Axios request failed to load: ${e}`);
@@ -88,7 +91,7 @@ export default function DoctorDetails(props) {
       //const obj = {name:"test",salary:"123",age:"23"}
       debugger;
       const res = await axios.put(
-        `http://dummy.restapiexample.com/api/v1/update/${id}`
+        `http://dummy.restapiexample.com/api/v1/update/${Id}`
       );
       setRowState(res.data.data);
       console.log('results fro PUT', res.data);

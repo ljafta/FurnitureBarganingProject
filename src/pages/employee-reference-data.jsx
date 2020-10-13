@@ -127,7 +127,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function EmployerReferenceData() {
+export default function EmployeeReferenceData() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -135,7 +135,7 @@ export default function EmployerReferenceData() {
   const {ChangeheaderName} = React.useContext(HeaderNameContext);
 
   React.useEffect(() => {
-    ChangeheaderName('Employer-Reference Data');
+    ChangeheaderName('Employee-Reference Data');
   }, []);
 
   const [modalInfo, setModalInfo] = useState({isVisible: false, value: ''});
@@ -225,22 +225,6 @@ export default function EmployerReferenceData() {
     // reset the mondalInfo state
     setModalInfo({...modalInfo, isVisible: false, value: ''});
   };
-
-  function setSelectedType() {
-    var message = 'You selected ' + state.selectValue;
-
-    return (
-      <div>
-        <select value={this.state.selectValue} onChange={this.handleChange}>
-          <option value="Orange">Orange</option>
-          <option value="Radish">Radish</option>
-          <option value="Cherry">Cherry</option>
-        </select>
-        <p>{message}</p>
-      </div>
-    );
-  }
-
   //toggle dropsownlist
   function toggle(event) {
     setType(event.target.value);
@@ -288,26 +272,31 @@ export default function EmployerReferenceData() {
           <IonLabel>Reference Data</IonLabel>
 
           <IonSelect value={type} placeholder="Select One" onIonChange={toggle}>
-            <IonSelectOption value="status">Status</IonSelectOption>
-            <IonSelectOption value="area">Area Code</IonSelectOption>
+            <IonSelectOption value="status">Race</IonSelectOption>
+            <IonSelectOption value="area">Work Status</IonSelectOption>
             <IonSelectOption value="partyornon-party">
-              Party/or non-party
+              Sick Find Status
             </IonSelectOption>
+            <IonSelectOption value="area">Financial Status</IonSelectOption>
+            <IonSelectOption value="area">Occupation</IonSelectOption>
+            <IonSelectOption value="area">Union Name</IonSelectOption>
+            <IonSelectOption value="area">Fund Type</IonSelectOption>
             {/* <IonSelectOption value="Pyschologist">Pyschologist</IonSelectOption>  */}
           </IonSelect>
         </IonItem>
-
         {type && (
           <IonItem>
-            <IonLabel>Status</IonLabel>
+            <IonLabel>Race</IonLabel>
 
             <IonSelect
               value={status}
               placeholder="Select One"
               onIonChange={togglestatus}
             >
-              <IonSelectOption value="status">Active/Open</IonSelectOption>
-              <IonSelectOption value="close">Close</IonSelectOption>
+              <IonSelectOption value="status">Black</IonSelectOption>
+              <IonSelectOption value="close">Colored</IonSelectOption>
+              <IonSelectOption value="area">White</IonSelectOption>
+              <IonSelectOption value="area">Other</IonSelectOption>
               {/* <IonSelectOption value="partyornon-party">Party/or non-party</IonSelectOption> */}
               {/* <IonSelectOption value="Pyschologist">Pyschologist</IonSelectOption>  */}
             </IonSelect>
@@ -315,16 +304,17 @@ export default function EmployerReferenceData() {
         )}
         {area && (
           <IonItem>
-            <IonLabel>Area Code</IonLabel>
+            <IonLabel>Sick Fund Status</IonLabel>
 
             <IonSelect
               value={area}
               placeholder="Select One"
               onIonChange={togglearea}
             >
-              <IonSelectOption value="status">Area A</IonSelectOption>
-              <IonSelectOption value="area">Area B</IonSelectOption>
-              <IonSelectOption value="partyornon-party">Area C</IonSelectOption>
+              <IonSelectOption value="status">
+                O - Out of benefit
+              </IonSelectOption>
+              <IonSelectOption value="area">I - In Benefit</IonSelectOption>
               {/* <IonSelectOption value="Pyschologist">Pyschologist</IonSelectOption>  */}
             </IonSelect>
           </IonItem>
@@ -332,21 +322,64 @@ export default function EmployerReferenceData() {
 
         {party && (
           <IonItem>
-            <IonLabel>Party</IonLabel>
+            <IonLabel>Financial Status</IonLabel>
 
             <IonSelect
               value={party}
               placeholder="Select One"
               onIonChange={toggleparty}
             >
-              <IonSelectOption value="status">Party</IonSelectOption>
-              <IonSelectOption value="area">Non-party</IonSelectOption>
+              <IonSelectOption value="status">C - Current</IonSelectOption>
               {/* <IonSelectOption value="partyornon-party">Party/or non-party</IonSelectOption> */}
               {/* <IonSelectOption value="Pyschologist">Pyschologist</IonSelectOption>  */}
             </IonSelect>
           </IonItem>
         )}
+        {party && (
+          <IonItem>
+            <IonLabel>Occupation</IonLabel>
 
+            <IonSelect
+              value={area}
+              placeholder="Select One"
+              onIonChange={togglearea}
+            >
+              <IonSelectOption value="status">Skilled</IonSelectOption>
+              <IonSelectOption value="area">Unskilled</IonSelectOption>
+              <IonSelectOption value="area">Semi-skilled</IonSelectOption>
+              <IonSelectOption value="area">Foreman/Supervisor</IonSelectOption>
+              {/* <IonSelectOptiosoralue="Pyschologist">Pyschologist</IonSelectOption>  */}
+            </IonSelect>
+          </IonItem>
+        )}
+        {party && (
+          <IonItem>
+            <IonLabel>Union Name</IonLabel>
+
+            <IonSelect
+              value={area}
+              placeholder="Select One"
+              onIonChange={togglearea}
+            >
+              <IonSelectOption value="status">Sandtu</IonSelectOption>
+              <IonSelectOption value="area">Mancosa</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+        )}
+        {party && (
+          <IonItem>
+            <IonLabel>Fund Type</IonLabel>
+
+            <IonSelect
+              value={area}
+              placeholder="Select One"
+              onIonChange={togglearea}
+            >
+              <IonSelectOption value="status">Provident</IonSelectOption>
+              <IonSelectOption value="area">None</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+        )}
         <EditDocRefData
           initValue={modalInfo}
           handleFormSubmit={handleFormSubmit}
@@ -355,7 +388,7 @@ export default function EmployerReferenceData() {
         <div style={{padding: 10}}>
           <IonCard>
             <IonCardHeader>
-              <IonCardTitle>Employer Reference Data</IonCardTitle>
+              <IonCardTitle>Employee Reference Data</IonCardTitle>
               <IonCardSubtitle></IonCardSubtitle>
             </IonCardHeader>
             <IonCardContent></IonCardContent>
@@ -380,8 +413,8 @@ export default function EmployerReferenceData() {
                     return (
                       <TableRow key={_thing.id}>
                         {/* <IonInput className={classes.size} type="text" value={_thing.name} name="name" />
-                 <IonInput className={classes.size} type="text" value={_thing.desc} desc="name" />
-                 <IonInput className={classes.size} type="text" value={_thing.sort} sort="name" /> */}
+                   <IonInput className={classes.size} type="text" value={_thing.desc} desc="name" />
+                   <IonInput className={classes.size} type="text" value={_thing.sort} sort="name" /> */}
 
                         <TableCell className="ion-text-wrap">
                           {_thing.name}
@@ -411,15 +444,15 @@ export default function EmployerReferenceData() {
                     );
                   })}
                   {/* {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="left">Calories</TableCell>
-              <TableCell align="left">Calories</TableCell>
-              <TableCell align="left">Calories</TableCell>
-            </TableRow>
-          ))} */}
+              <TableRow key={row.name}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="left">Calories</TableCell>
+                <TableCell align="left">Calories</TableCell>
+                <TableCell align="left">Calories</TableCell>
+              </TableRow>
+            ))} */}
 
                   <p>
                     <IonButton onClick={() => modalInfoWithEntry()}>

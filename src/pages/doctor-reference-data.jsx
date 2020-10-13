@@ -46,9 +46,15 @@ import Wrapper from '../components/wrapper';
 import {HeaderNameContext} from '../context/hearder';
 import Modal from '../components/Modal';
 import UseThings from '../components/UseThings';
+import {getData} from '../components/UseThings';
 import EditDocRefData from '../components/EditDocRefData';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import useThings from '../components/UseThings';
+import {Satellite} from '../../node_modules/@material-ui/icons';
+import {useParams} from 'react-router';
+
+// import { IonSpinner } from '@ionic/react';
 
 const columns = [
   {id: 'name', label: 'Short Code', minWidth: 50},
@@ -131,8 +137,9 @@ export default function DoctorEnquire() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [rowState, setRowState] = React.useState([rows]);
+  const [rowState, setRowState] = React.useState();
   const {ChangeheaderName} = React.useContext(HeaderNameContext);
+  const {id} = useParams();
 
   React.useEffect(() => {
     ChangeheaderName('Doctor-Reference Data');
@@ -142,24 +149,23 @@ export default function DoctorEnquire() {
 
   const endpoint = `http://dummy.restapiexample.com/api/v1/employees`;
 
-  React.useEffect(() => {
-    //componentDidMount().then(response =>setRowState(response.data))
-    //componentDidMount();
-  }, []);
-
-  async function componentDidMount() {
-    // axios.get(endpoint).then(response => response.data)
-    // .then((response) => {
-    //   let responseJson =  response.data;
-    //   //return response.data;
-    //   console.log(response)
-    //})
-    const res = await axios.get(endpoint);
-    setRowState(res.data.data);
-    console.log('res', res);
-  }
-
   let {state, dispatch} = UseThings();
+
+  const [loading, setLoading] = useState(false);
+
+  const endpointget = 'http://dummy.restapiexample.com/api/v1/employees';
+
+  const url =
+    'https://3zpjzh9s97.execute-api.eu-west-1.amazonaws.com/dev/doctortype';
+
+  async function getData() {
+    await axios.get(url).then((response) => {
+      setRowState(response.data);
+    });
+  }
+  React.useEffect(() => {
+    getData();
+  }, []);
 
   /**
    * update an existing entry in the list based on data
@@ -167,44 +173,122 @@ export default function DoctorEnquire() {
    * @param {*} _index
    * @param {*} _data
    */
-  const editEntry = (_index, _data) => {
-    let payload = {index: _index, data: _data};
+  // const editEntry = (_index, _data) => {
+  //   let payload = {index: _index, data: _data};
 
-    dispatch({type: 'EDIT_THING', ...payload});
-  };
+  //   dispatch({type: 'EDIT_THING', ...payload});
+  // };
 
-  const addNewEntry = (_data) => {
-    // const dd= rowState;
-    // console.log("_data", _data)
-    // dd.push(createData(_data.name, _data.desc, _data.sort))
-    //setRowState(dd);
-    Swal.fire({
-      title: 'Success',
-      type: 'success',
-      text: 'Your work has been saved.',
-    });
-    dispatch({type: 'ADD_THING', data: _data});
-  };
+  const editEntry = async (_index, _data) => {
+    try {
+      console.log('data updating ', _index, _data);
 
-  const deleteEntry = (_index) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-        dispatch({type: 'DELETE_THING', index: _index});
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelled', 'Record NOT deleted :)', 'error');
+      const response = await axios.put(
+        `https://3zpjzh9s97.execute-api.eu-west-1.amazonaws.com/dev/doctortype/?id=${_index}`,
+        _data
+      );
+
+      if (response) {
+        const payload = {index: _index, data: _data};
+
+        const stateData = [...rowState];
+        stateData[_index] = _data;
+
+        setRowState(stateData);
+      } else {
+        alert('Something went wrong while updating user details');
       }
-    });
-    // alert(JSON.stringify("Are you sure you want to reamve: " + _index));
+    } catch (error) {
+      console.log('Error: ', error);
+      // dispatch(error);
+    }
   };
+
+  // const addNewEntry = (_data) => {
+  //     Swal.fire({
+  //     title: 'Success',
+  //     type: 'success',
+  //     text: 'Your work has been saved.',
+  //   });
+  //   dispatch({type: 'ADD_THING', data: _data});
+  // };
+  const addNewEntry = async (data) => {
+    try {
+      
+      const response = await axios.post(
+        'https://3zpjzh9s97.execute-api.eu-west-1.amazonaws.com/dev/doctortype/', data);
+        Swal.fire({
+              title: 'Success',
+              type: 'success',
+              text: 'Your work has been saved.',
+            });
+
+      if (response) {
+        const stateData = [...rowState];
+        stateData.push(data);
+        setRowState(stateData);
+      } else {
+        alert('Something went wrong while adding ');
+      }
+    } catch (error) {
+      // dispatch(error);
+      console.log('Error: ', error);
+      alert('Something went wrong while adding user details ', error.message);
+
+    }
+  };
+
+  // const deleteEntry = (_index) => {
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: "You won't be able to revert this!",
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Yes, delete it!',
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+  //       dispatch({type: 'DELETE_THING', index: _index});
+  //     } else if (result.dismiss === Swal.DismissReason.cancel) {
+  //       Swal.fire('Cancelled', 'Record NOT deleted :)', 'error');
+  //     }
+  //   });
+  //   // alert(JSON.stringify("Are you sure you want to reamve: " + _index));
+  // };
+
+  const deleteEntry = async (id) => { 
+    try {
+      
+      const response = await axios.delete(`https://3zpjzh9s97.execute-api.eu-west-1.amazonaws.com/dev/doctortype/?id=${id}`);
+      Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+          }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                // dispatch({type: 'DELETE_THING', index: _index});
+                let stateData = [...rowState];
+                stateData = stateData.filter(state => state.Id != id)
+                setRowState(stateData);
+                
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire('Cancelled', 'Record NOT deleted :)', 'error');
+              }
+            });
+    
+    } catch (error) {
+      alert('Something went wrong while Deleting user details ', error.message);
+      
+    }
+  };
+
 
   const [type, setType] = useState();
 
@@ -253,8 +337,13 @@ export default function DoctorEnquire() {
   }
   //console.log("rowstae", rowState)
   return (
-    <IonContent padding>
+    <IonContent padding> 
       <Wrapper>
+
+        {/* <IonItem>
+          <IonSpinner />
+
+        </IonItem> */}
         <IonItem>
           <IonLabel>Reference Data</IonLabel>
 
@@ -335,42 +424,42 @@ export default function DoctorEnquire() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {state.things.map((_thing, _index) => {
-                    //console.log("_thing", _thing)
-
-                    return (
-                      <TableRow key={_thing.id}>
-                        {/* <IonInput className={classes.size} type="text" value={_thing.name} name="name" />
+                  {rowState &&
+                    rowState.map((_thing, _index) => {
+                      console.log('_thing', _thing);
+                      return (
+                        <TableRow key={_thing.id}>
+                          {/* <IonInput className={classes.size} type="text" value={_thing.name} name="name" />
                  <IonInput className={classes.size} type="text" value={_thing.desc} desc="name" />
                  <IonInput className={classes.size} type="text" value={_thing.sort} sort="name" /> */}
 
-                        <TableCell className="ion-text-wrap">
-                          {_thing.name}
-                        </TableCell>
-                        <TableCell className="ion-text-wrap">
-                          {_thing.desc}
-                        </TableCell>
-                        <TableCell className="ion-text-wrap">
-                          {_thing.sort}
-                        </TableCell>
+                          <TableCell className="ion-text-wrap">
+                            {_thing.Name}
+                          </TableCell>
+                          <TableCell className="ion-text-wrap">
+                            {_thing.Description}
+                          </TableCell>
+                          <TableCell className="ion-text-wrap">
+                            {_thing.SortOrder}
+                          </TableCell>
 
-                        <TableCell>
-                          <IonButton
-                            title="Edit"
-                            onClick={() => modalInfoWithEntry(_thing, _index)}
-                          >
-                            <IonIcon icon={create}></IonIcon>
-                          </IonButton>
-                          <IonButton
-                            title="Delete"
-                            onClick={() => deleteEntry(_index)}
-                          >
-                            <IonIcon icon={trash}></IonIcon>
-                          </IonButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                          <TableCell>
+                            <IonButton
+                              title="Edit"
+                              onClick={() => modalInfoWithEntry(_thing, _index)}
+                            >
+                              <IonIcon icon={create}></IonIcon>
+                            </IonButton>
+                            <IonButton
+                              title="Delete"
+                              onClick={() => deleteEntry(_thing.Id)}
+                            >
+                              <IonIcon icon={trash}></IonIcon>
+                            </IonButton>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                   {/* {rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
@@ -382,11 +471,11 @@ export default function DoctorEnquire() {
             </TableRow>
           ))} */}
 
-            <p>
-              <IonButton onClick={() => modalInfoWithEntry()}>
-                Create New Entry
-              </IonButton>
-            </p>           
+                  <p>
+                    <IonButton onClick={() => modalInfoWithEntry()}>
+                      Create New Entry
+                    </IonButton>
+                  </p>
                 </TableBody>
               </Table>
             </TableContainer>

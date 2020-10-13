@@ -29,6 +29,10 @@ import {Redirect, Route} from 'react-router-dom';
 
 // File imports
 import Tested from './pages/test';
+
+import SharedReferenceData from './pages/shared-reference-data';
+import EmployeeReferenceData from './pages/employee-reference-data';
+import EmployerReferenceData from './pages/employer-reference-data';
 import DoctorEnquire from './pages/doctorbrowse';
 import CreateEmployer from './pages/create-employer-form';
 import CreateEmployee from './pages/create-employee-form';
@@ -117,6 +121,21 @@ function App() {
                 />
                 <Route
                   exact
+                  path="/employee-reference-data"
+                  component={EmployeeReferenceData}
+                />
+                <Route
+                  exact
+                  path="/shared-reference-data"
+                  component={SharedReferenceData}
+                />
+                <Route
+                  exact
+                  path="/employer-reference-data"
+                  component={EmployerReferenceData}
+                />
+                <Route
+                  exact
                   path="/doctor-reference-data"
                   component={DoctorReference}
                 />
@@ -142,7 +161,7 @@ function App() {
                 />
                 <Route
                   exact
-                  path="/doctor-details/:id"
+                  path="/doctor-details/:Id"
                   component={DoctorDetails}
                 />
                 <Route exact path="/comp" component={Comp} />

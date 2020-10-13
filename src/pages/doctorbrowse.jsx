@@ -11,7 +11,15 @@ import {
   IonList,
   IonFab,
 } from '@ionic/react';
-import {camera, trash, close, create} from 'ionicons/icons';
+import {
+  camera,
+  trash,
+  close,
+  create,
+  print,
+  cloudDownloadSharp,
+} from 'ionicons/icons';
+import BackupIcon from '@material-ui/icons/Backup';
 //import { Tooltip } from 'ionic-tooltips';
 import {Tooltip} from '@progress/kendo-react-tooltip';
 import React, {useState} from 'react';
@@ -107,7 +115,7 @@ export default function DoctorEnquire() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rowState, setRowState] = React.useState(rows);
   const {ChangeheaderName} = React.useContext(HeaderNameContext);
-  const {id} = useParams();
+  // const {id} = useParams();
 
   React.useEffect(() => {
     ChangeheaderName('Doctor-Overview');
@@ -115,24 +123,33 @@ export default function DoctorEnquire() {
     componentgetAll();
   }, []);
 
-  const endpointget = `http://dummy.restapiexample.com/api/v1/employees`;
+  const endpointdocman = `https://3zpjzh9s97.execute-api.eu-west-1.amazonaws.com/dev/doctortype`;
+  const endpointget ='https://3zpjzh9s97.execute-api.eu-west-1.amazonaws.com/dev/doctor';
+ 
 
   async function componentgetAll() {
     const res = await axios.get(endpointget);
-    setRowState(res.data.data);
-    console.log('res', res.data.data);
+    setRowState(res.data);
+    console.log('test test test', res.data);
   }
 
-  //const  endpointdel  =  `http://dummy.restapiexample.com/api/v1/delete/${id}`;
+  //const  endpointdel  =  `http://dummy.restapiexample.com/api/v1/d    elete/${id}`;
 
-  async function componentDel() {
+  async function componentDel(id) {
     try {
-      debugger;
-      const res = await axios.delete(
-        `http://dummy.restapiexample.com/api/v1/delete/${id}`
-      );
-      setRowState(res.data.data);
-      console.log('res', res.data);
+      // debugger;
+      const res = await axios.delete(`https://3zpjzh9s97.execute-api.eu-west-1.amazonaws.com/dev/doctortype/?id=${id}`)
+
+
+      // setRowState(res.data.data);
+      if (res) {
+        let stateData = [...rowState];
+       stateData = stateData.filter(state => state.Id != id)
+       setRowState(stateData);
+      } else {
+        alert('Something went wrong while Deleting user details');
+      }
+      console.log('res', res);
     } catch (e) {
       console.log(`😱 Axios request failed: ${e}`);
     }
@@ -197,7 +214,6 @@ export default function DoctorEnquire() {
       setRowState(data);
     }
   }
-
   return (
     <IonContent>
       <Wrapper>
@@ -216,7 +232,6 @@ export default function DoctorEnquire() {
                 initValue={modalInfo}
                 handleFormSubmit={handleFormSubmit}
               />
-
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
@@ -231,13 +246,13 @@ export default function DoctorEnquire() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rowState.map((row) => (
+                {rowState && rowState.map((row) => (
                   <TableRow key={row.id} className={classes.size}>
                     <TableCell component="th" scope="row">
-                      {row.id}
+                      {row.Code}
                     </TableCell>
-                    <TableCell> {row.employee_name}</TableCell>
-                    <TableCell>{row.employee_salary} </TableCell>
+                    <TableCell> {row.FullName}</TableCell>
+                    <TableCell>{row.DoctorType} </TableCell>
                     <TableCell>
                       <div>
                         <IonModal isOpen={showModal} cssClass="my-custom-class">
@@ -261,9 +276,15 @@ export default function DoctorEnquire() {
                         {/* //componentDel */}
                         <IonButton
                           title="Delete"
-                          onClick={() => componentDel(row.id)}
+                          onClick={() => componentDel(row.Id)}
                         >
                           <IonIcon icon={trash}></IonIcon>
+                        </IonButton>
+                        <IonButton
+                          title="Print"
+                          onClick={() => componentDel(row.id)}
+                        >
+                          <IonIcon icon={cloudDownloadSharp}></IonIcon>
                         </IonButton>
                       </div>
                     </TableCell>
@@ -273,9 +294,9 @@ export default function DoctorEnquire() {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[25, 100]}
             component="div"
-            count={rowState.length}
+            count={rowState && rowState.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}

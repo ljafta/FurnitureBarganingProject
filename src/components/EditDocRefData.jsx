@@ -125,9 +125,9 @@ import {
 const EditDocRef = ({initValue, handleFormSubmit}) => {
   //manage the Input
   const [inputValue, setInputValue] = useState({
-    name: '',
-    desc: '',
-    sort: '',
+    Name: '',
+    Description: '',
+    SortOrder: '',
   });
 
   //const [inputValue, setInputValue] = useState([]);
@@ -180,13 +180,13 @@ const EditDocRef = ({initValue, handleFormSubmit}) => {
             <IonInput
               type="text"
               name="DoctorName"
-              value={inputValue && inputValue.name}
+              value={inputValue && inputValue.Name}
               onIonChange={(e) =>
-                e.target &&
-                e.target.value &&
+                // e.target &&
+                // e.target.value &&
                 setInputValue((prevState) => ({
                   ...prevState,
-                  name: e.target.value,
+                  Name: e.target.value,
                 }))
               }
             ></IonInput>
@@ -197,13 +197,13 @@ const EditDocRef = ({initValue, handleFormSubmit}) => {
             <IonInput
               type="text"
               name="DoctorName"
-              value={inputValue && inputValue.desc}
+              value={inputValue && inputValue.Description}
               onIonChange={(e) =>
                 e.target &&
                 e.target.value &&
                 setInputValue((prevState) => ({
                   ...prevState,
-                  desc: e.target.value,
+                  Description: e.target.value,
                 }))
               }
             ></IonInput>
@@ -214,13 +214,13 @@ const EditDocRef = ({initValue, handleFormSubmit}) => {
             <IonInput
               type="text"
               name="DoctorName"
-              value={inputValue && inputValue.sort}
+              value={inputValue && inputValue.SortOrder}
               onIonChange={(e) =>
                 e.target &&
                 e.target.value &&
                 setInputValue((prevState) => ({
                   ...prevState,
-                  sort: e.target.value,
+                  SortOrder: e.target.value,
                 }))
               }
             ></IonInput>

@@ -127,7 +127,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function EmployerReferenceData() {
+export default function SharedReferenceData() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -135,7 +135,7 @@ export default function EmployerReferenceData() {
   const {ChangeheaderName} = React.useContext(HeaderNameContext);
 
   React.useEffect(() => {
-    ChangeheaderName('Employer-Reference Data');
+    ChangeheaderName('Shared-Reference Data');
   }, []);
 
   const [modalInfo, setModalInfo] = useState({isVisible: false, value: ''});
@@ -288,26 +288,26 @@ export default function EmployerReferenceData() {
           <IonLabel>Reference Data</IonLabel>
 
           <IonSelect value={type} placeholder="Select One" onIonChange={toggle}>
-            <IonSelectOption value="status">Status</IonSelectOption>
-            <IonSelectOption value="area">Area Code</IonSelectOption>
-            <IonSelectOption value="partyornon-party">
-              Party/or non-party
-            </IonSelectOption>
+            <IonSelectOption value="absa">ABSA</IonSelectOption>
+            <IonSelectOption value="fnb">First National Bank</IonSelectOption>
+            <IonSelectOption value="nedbank">NedBank</IonSelectOption>
+            <IonSelectOption value="stdbank">Standard Bank</IonSelectOption>
             {/* <IonSelectOption value="Pyschologist">Pyschologist</IonSelectOption>  */}
           </IonSelect>
         </IonItem>
 
         {type && (
           <IonItem>
-            <IonLabel>Status</IonLabel>
+            <IonLabel>Type of Account</IonLabel>
 
             <IonSelect
               value={status}
               placeholder="Select One"
               onIonChange={togglestatus}
             >
-              <IonSelectOption value="status">Active/Open</IonSelectOption>
-              <IonSelectOption value="close">Close</IonSelectOption>
+              <IonSelectOption value="status">Cheque/Savings</IonSelectOption>
+              <IonSelectOption value="close">Current</IonSelectOption>
+              <IonSelectOption value="close">Tax Free</IonSelectOption>
               {/* <IonSelectOption value="partyornon-party">Party/or non-party</IonSelectOption> */}
               {/* <IonSelectOption value="Pyschologist">Pyschologist</IonSelectOption>  */}
             </IonSelect>
@@ -355,7 +355,7 @@ export default function EmployerReferenceData() {
         <div style={{padding: 10}}>
           <IonCard>
             <IonCardHeader>
-              <IonCardTitle>Employer Reference Data</IonCardTitle>
+              <IonCardTitle>Shared Reference Data</IonCardTitle>
               <IonCardSubtitle></IonCardSubtitle>
             </IonCardHeader>
             <IonCardContent></IonCardContent>
@@ -380,8 +380,8 @@ export default function EmployerReferenceData() {
                     return (
                       <TableRow key={_thing.id}>
                         {/* <IonInput className={classes.size} type="text" value={_thing.name} name="name" />
-                 <IonInput className={classes.size} type="text" value={_thing.desc} desc="name" />
-                 <IonInput className={classes.size} type="text" value={_thing.sort} sort="name" /> */}
+                   <IonInput className={classes.size} type="text" value={_thing.desc} desc="name" />
+                   <IonInput className={classes.size} type="text" value={_thing.sort} sort="name" /> */}
 
                         <TableCell className="ion-text-wrap">
                           {_thing.name}
@@ -411,15 +411,15 @@ export default function EmployerReferenceData() {
                     );
                   })}
                   {/* {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="left">Calories</TableCell>
-              <TableCell align="left">Calories</TableCell>
-              <TableCell align="left">Calories</TableCell>
-            </TableRow>
-          ))} */}
+              <TableRow key={row.name}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="left">Calories</TableCell>
+                <TableCell align="left">Calories</TableCell>
+                <TableCell align="left">Calories</TableCell>
+              </TableRow>
+            ))} */}
 
                   <p>
                     <IonButton onClick={() => modalInfoWithEntry()}>

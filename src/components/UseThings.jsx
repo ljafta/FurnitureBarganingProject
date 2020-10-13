@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, {useEffect, useReducer} from 'react';
 
 const useThings = () => {
   const reducer = (state, action) => {
@@ -16,7 +17,6 @@ const useThings = () => {
         };
       }
       case 'EDIT_THING': {
-        debugger;
         return {
           ...state,
           things: [
@@ -35,28 +35,30 @@ const useThings = () => {
     return {name, desc, sort, contact};
   }
 
-  const rows = [
-    createData('GP', 'General Practioner', '1', '011155'),
-    createData('GS', 'General Surgen', '2', '0256223'),
-    createData('GP', 'General Physcholigist', '3', '0215899'),
-    createData('GD', 'General Dentist', '4', '031589'),
-    createData('GO', 'General Optometrist', '5', '0458977'),
-  ];
+  const endpointget = 'http://dummy.restapiexample.com/api/v1/employees';
+  const url =
+    'https://3zpjzh9s97.execute-api.eu-west-1.amazonaws.com/dev/doctortype';
+
+  async function getData() {
+    await axios.get(url).then((response) => {
+      dispatch(response.data);
+    });
+  }
+
+  async function getData() {
+    const response = await axios.get(url);
+
+    console.log('test test', response.data);
+  }
 
   const [state, dispatch] = React.useReducer(reducer, {
-    things: [
-      {
-        name: 'GD',
-        desc: 'General Practioner',
-        sort: '4',
-        contact: '011155',
-      },
-    ],
+    things: [],
   });
 
   return {
     state,
     dispatch,
+    //Doctref
   };
 };
 
